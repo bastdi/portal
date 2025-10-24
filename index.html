@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Fun Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 { color: #333; }
+    .section { margin: 30px 0; padding: 20px; border: 2px solid #ccc; border-radius: 10px; background: #fff; }
+    button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+    #tic-tac-toe button { width: 60px; height: 60px; font-size: 24px; }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My Fun Portal!</h1>
+
+  <!-- Section 1: Mini-game (Tic-Tac-Toe) -->
+  <div class="section" id="tic-tac-toe">
+    <h2>Tic-Tac-Toe</h2>
+    <div>
+      <button onclick="makeMove(0)"> </button>
+      <button onclick="makeMove(1)"> </button>
+      <button onclick="makeMove(2)"> </button>
+    </div>
+    <div>
+      <button onclick="makeMove(3)"> </button>
+      <button onclick="makeMove(4)"> </button>
+      <button onclick="makeMove(5)"> </button>
+    </div>
+    <div>
+      <button onclick="makeMove(6)"> </button>
+      <button onclick="makeMove(7)"> </button>
+      <button onclick="makeMove(8)"> </button>
+    </div>
+    <p id="status"></p>
+  </div>
+
+  <!-- Section 2: YouTube video embed -->
+  <div class="section">
+    <h2>Featured Video</h2>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+  </div>
+
+  <!-- Section 3: Quiz -->
+  <div class="section" id="quiz">
+    <h2>Fun Quiz</h2>
+    <p>What is 2 + 2?</p>
+    <button onclick="alert('Correct! 🎉')">4</button>
+    <button onclick="alert('Try again 😅')">5</button>
+    <button onclick="alert('Try again 😅')">3</button>
+  </div>
+
+  <script>
+    // Tic-Tac-Toe logic
+    let board = ["", "", "", "", "", "", "", "", ""];
+    let turn = "X";
+    const status = document.getElementById("status");
+
+    function makeMove(index) {
+      if (board[index] === "") {
+        board[index] = turn;
+        document.querySelectorAll("#tic-tac-toe button")[index].innerText = turn;
+        if (checkWin()) {
+          status.innerText = turn + " wins!";
+          setTimeout(() => resetGame(), 2000);
+        } else if (!board.includes("")) {
+          status.innerText = "It's a tie!";
+          setTimeout(() => resetGame(), 2000);
+        } else {
+          turn = turn === "X" ? "O" : "X";
+          status.innerText = turn + "'s turn";
+        }
+      }
+    }
+
+    function checkWin() {
+      const winCombos = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      return winCombos.some(combo => 
+        board[combo[0]] !== "" &&
+        board[combo[0]] === board[combo[1]] &&
+        board[combo[1]] === board[combo[2]]
+      );
+    }
+
+    function resetGame() {
+      board = ["", "", "", "", "", "", "", "", ""];
+      turn = "X";
+      status.innerText = "";
+      document.querySelectorAll("#tic-tac-toe button").forEach(btn => btn.innerText = "");
+    }
+  </script>
+</body>
+</html>
